@@ -24,27 +24,28 @@ def date_df(lst):
     df = df.sort_values(by = 'date')
     return df
 
-df = date_df(ASH_file)
+df = date_df(INP_file)
 
 # plot data using North Polar Stereo Projection
 for i in range(len(ASH_file)):
     title = df['date'][i]
-    ASHcube = iris.load_cube(ASH_file[i])
-    ASHdata = ASHcube.data
     
-    TEMPcube = iris.load_cube(TEMP_file[i])
-    TEMPdata = TEMPcube.data
+    # ASHcube = iris.load_cube(ASH_file[i])
+    # ASHdata = ASHcube.data
+    
+    # TEMPcube = iris.load_cube(TEMP_file[i])
+    # TEMPdata = TEMPcube.data
     
     INPcube = iris.load_cube(INP_file[i])
     INPdata = INPcube.data
     
-    alt = ASHcube.coord('altitude').points
-    lat = ASHcube[:, :383, :].coord('latitude').points # remove latitude = 0 data point (bug fix)
-    lon = ASHcube.coord('longitude').points
+    alt = INPcube.coord('altitude').points
+    lat = INPcube[:, :383, :].coord('latitude').points # remove latitude = 0 data point (bug fix)
+    lon = INPcube.coord('longitude').points
     
     # collapse data over altitude (mean concentration over entire vertical column)
-    ASHcube_altmean = ASHcube[:, :383, :].collapsed('altitude', iris.analysis.MEAN)
-    ASHdata_altmean = ASHcube_altmean.data
+    INPcube_altmean = INPcube[:, :383, :].collapsed('altitude', iris.analysis.MEAN)
+    INPdata_altmean = INPcube_altmean.data
     
     minimum_log_level = 0.001
     maximum_log_level = 10000
@@ -64,8 +65,8 @@ for i in range(len(ASH_file)):
     ax.coastlines(resolution = '50m')
     ax.add_feature(cfeature.LAND.with_scale('50m'))
     ax.set_title('Mean INP Air Concentration Over Entire Vertical Column - ' + str(title))
-    cs = ax.contourf(x1[:,:], y1[:,:], ASHdata_altmean[:,:], levels = ccont_levels, transform = ccrs.PlateCarree(), cmap = cmap, norm = norm)
-    plt.colorbar(cs, orientation = 'horizontal', ticks = cbar_ticks, label = '$\mu g/ m^3$')
+    cs = ax.contourf(x1[:,:], y1[:,:], INPdata_altmean[:,:], levels = ccont_levels, transform = ccrs.PlateCarree(), cmap = cmap, norm = norm)
+    plt.colorbar(cs, orientation = 'horizontal', ticks = cbar_ticks, label = '# / L')
     
     # save plots as .png files
-    fig.saefig(df['name'][i] + '.png')
+    fig.savefig('mean_INP' + df['name'][i] + '.png')
