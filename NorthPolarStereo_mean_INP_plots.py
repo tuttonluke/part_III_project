@@ -68,5 +68,6 @@ for i in range(len(ASH_file)):
     cs = ax.contourf(x1[:,:], y1[:,:], INPdata_altmean[:,:], levels = ccont_levels, transform = ccrs.PlateCarree(), cmap = cmap, norm = norm)
     plt.colorbar(cs, orientation = 'horizontal', ticks = cbar_ticks, label = '# / L')
     
+    # plt.show()
     # save plots as .png files
     fig.savefig('mean_INP' + df['name'][i] + '.png')
