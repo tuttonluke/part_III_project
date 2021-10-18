@@ -51,7 +51,7 @@ for i in range(len(fields_with_dir)):
         T =  cubeT.data
         ns = np.where((T >= -35) & (T <= -12.5), np.power(10,(0.2663-0.183*T)) * np.power(10, 4), 0) # parameterisation of ice-nucleating activity of Icelandic ash/dust
         INP = (1 - np.exp(-ns*VApsa)) * VApnum
-        return INP
+        return INP # INP concentration in units # / m^3
    
     INP0 = INP_calc(VAdiams[0],VAmasses[0]) 
     INP1 = INP_calc(VAdiams[1],VAmasses[1])
