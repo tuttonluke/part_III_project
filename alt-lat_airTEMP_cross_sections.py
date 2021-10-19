@@ -27,6 +27,10 @@ def date_df(lst):
 # sort files by date 
 df = date_df(TEMP_file)
 
+alt = TEMPcube.coord('altitude').points
+lat = TEMPcube.coord('latitude').points
+lon = TEMPcube.coord('longitude').points
+
 for i in range(len(TEMP_file)):
     title = df['date'][i]
     
@@ -35,10 +39,6 @@ for i in range(len(TEMP_file)):
     
     TEMPcube_lonmean = TEMPcube.collapsed('longitude', iris.analysis.MEAN) # TEMPcube_lonmean is 2D [altitude, latitude]
     TEMPdata_lonmean = TEMPcube_lonmean.data
-    
-    alt = TEMPcube.coord('altitude').points
-    lat = TEMPcube.coord('latitude').points
-    lon = TEMPcube.coord('longitude').points
     
     # plot air temperature averaged over longitude as a function of latitude and altitude
     x1, y1 = np.meshgrid(lat, alt)
