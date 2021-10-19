@@ -22,6 +22,7 @@ def date_df(lst):
     df = pd.DataFrame({'date' : time_list, 'name' : name_list})
     df['date'] = pd.to_datetime(df['date'])
     df = df.sort_values(by = 'date')
+    df['sorted_index'] = [i for i in range(len(time_list))]
     return df
 
 df = date_df(INP_file)
