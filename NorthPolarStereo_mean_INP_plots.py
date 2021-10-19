@@ -27,6 +27,17 @@ def date_df(lst):
 
 df = date_df(INP_file)
 
+alt = INPcube.coord('altitude').points
+lat = INPcube[:, :383, :].coord('latitude').points # remove latitude = 0 data point (bug fix)
+lon = INPcube.coord('longitude').points
+
+minimum_log_level = 0.001
+maximum_log_level = 10000
+cmap = 'PuBu' #  https://matplotlib.org/stable/tutorials/colors/colormaps.html 
+norm = mcols.SymLogNorm(linthresh = minimum_log_level, vmin = 0, vmax = maximum_log_level) # create a logarithmic data normalization
+ccont_levels = [10**i for i in range(-3, 5)] # colour contour levels
+cbar_ticks = [10** i for i in range(-3, 5)] # colour bar ticks
+
 # plot data using North Polar Stereo Projection
 for i in range(len(ASH_file)):
     title = df['date'][i]
@@ -40,20 +51,9 @@ for i in range(len(ASH_file)):
     INPcube = iris.load_cube(INP_file[i])
     INPdata = INPcube.data
     
-    alt = INPcube.coord('altitude').points
-    lat = INPcube[:, :383, :].coord('latitude').points # remove latitude = 0 data point (bug fix)
-    lon = INPcube.coord('longitude').points
-    
     # collapse data over altitude (mean concentration over entire vertical column)
     INPcube_altmean = INPcube[:, :383, :].collapsed('altitude', iris.analysis.MEAN)
     INPdata_altmean = INPcube_altmean.data
-    
-    minimum_log_level = 0.001
-    maximum_log_level = 10000
-    cmap = 'PuBu' #  https://matplotlib.org/stable/tutorials/colors/colormaps.html 
-    norm = mcols.SymLogNorm(linthresh = minimum_log_level, vmin = 0, vmax = maximum_log_level) # create a logarithmic data normalization
-    ccont_levels = [10**i for i in range(-3, 5)] # colour contour levels
-    cbar_ticks = [10** i for i in range(-3, 5)] # colour bar ticks
     
     x1, y1 = np.meshgrid(lon, lat)
     
