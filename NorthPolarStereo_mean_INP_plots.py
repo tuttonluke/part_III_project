@@ -27,10 +27,6 @@ def date_df(lst):
 
 df = date_df(INP_file)
 
-alt = INPcube.coord('altitude').points
-lat = INPcube[:, :383, :].coord('latitude').points # remove latitude = 0 data point (bug fix)
-lon = INPcube.coord('longitude').points
-
 minimum_log_level = 0.001
 maximum_log_level = 10000
 cmap = 'PuBu' #  https://matplotlib.org/stable/tutorials/colors/colormaps.html 
@@ -50,6 +46,10 @@ for i in range(len(ASH_file)):
     
     INPcube = iris.load_cube(INP_file[i])
     INPdata = INPcube.data
+    
+    alt = INPcube.coord('altitude').points
+    lat = INPcube[:, :383, :].coord('latitude').points # remove latitude = 0 data point (bug fix)
+    lon = INPcube.coord('longitude').points
     
     # collapse data over altitude (mean concentration over entire vertical column)
     INPcube_altmean = INPcube[:, :383, :].collapsed('altitude', iris.analysis.MEAN)
