@@ -59,7 +59,7 @@ for i in range(len(ASH_file)):
     fig = plt.figure(figsize = (10, 10))
     ax = fig.add_subplot(1, 1, 1, projection = ccrs.NorthPolarStereo()) # https://scitools.org.uk/cartopy/docs/v0.15/crs/projections.html
     ax.patch.set_visible(False)
-    extent = [-5500000, 5500000, -5500000, 5500000] # size of domain plotted
+    extent = [-6600000, 6600000, -7000000, 7000000] # size of domain plotted
     ax.set_extent(extent, ccrs.NorthPolarStereo())
     ax.gridlines()
     ax.coastlines(resolution = '50m')
