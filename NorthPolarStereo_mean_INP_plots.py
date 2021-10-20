@@ -49,7 +49,7 @@ for i in range(len(ASH_file)):
     INPcube = iris.load_cube(INP_file[i])
     INPdata = INPcube.data
     
-    alt = INPcube.coord('altitude').points
+    # alt = INPcube.coord('altitude').points
     lat = INPcube[:, :383, :].coord('latitude').points # remove latitude = 90 data point (bug fix)
     lon = INPcube.coord('longitude').points
     
