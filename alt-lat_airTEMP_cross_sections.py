@@ -27,9 +27,8 @@ def date_df(lst):
 # sort files by date 
 df = date_df(TEMP_file)
 
-alt = TEMPcube.coord('altitude').points
-lat = TEMPcube.coord('latitude').points
-lon = TEMPcube.coord('longitude').points
+ccont_levels = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30]
+cbar_ticks = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30]
 
 for i in range(len(TEMP_file)):
     title = df['date'][i]
@@ -40,6 +39,10 @@ for i in range(len(TEMP_file)):
     TEMPcube_lonmean = TEMPcube.collapsed('longitude', iris.analysis.MEAN) # TEMPcube_lonmean is 2D [altitude, latitude]
     TEMPdata_lonmean = TEMPcube_lonmean.data
     
+    alt = TEMPcube.coord('altitude').points
+    lat = TEMPcube.coord('latitude').points
+    lon = TEMPcube.coord('longitude').points
+    
     # plot air temperature averaged over longitude as a function of latitude and altitude
     x1, y1 = np.meshgrid(lat, alt)
     
@@ -47,9 +50,6 @@ for i in range(len(TEMP_file)):
     ax.set_title('Air Temperature Altitude / Latitude Cross Section - ' + str(title), pad = 20)
     ax.set_xlabel('Latitude ($^\circ$ N)')
     ax.set_ylabel('Altitude (m asl)')
-    ccont_levels = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30]
-    cbar_ticks = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30]
-    
     cs = ax.contourf(x1, y1, TEMPdata_lonmean[:, :], cmap = 'RdBu_r', levels = ccont_levels)
     plt.colorbar(cs, ticks = cbar_ticks, label = 'Temperature ($^\circ$ C)')
     ax.plot(lat[271], 370, 'k^', label = 'Eyja Volcano')
