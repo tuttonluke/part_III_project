@@ -1,3 +1,5 @@
+# plot cross section of air temperature averaged over all longtiude data, as a function of altitude and latitude
+
 import iris
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,6 +12,7 @@ TEMP_file = ['TEMP201004141200.nc', 'TEMP201004141800.nc', 'TEMP201004150000.nc'
 # INPcube = iris.load_cube(INP_file[0])
 # INPdata = INPcube.data
 
+# create dataframe for ease of sorting and naming files
 def date_df(lst):
     
     time_list = []
@@ -27,7 +30,7 @@ def date_df(lst):
 # sort files by date 
 df = date_df(TEMP_file)
 
-ccont_levels = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30]
+ccont_levels = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30] # colour bar parameters
 cbar_ticks = [-60, -50, -40, -30, -20, -10, 0, 10, 20, 30]
 
 for i in range(len(TEMP_file)):
@@ -55,5 +58,5 @@ for i in range(len(TEMP_file)):
     ax.plot(lat[271], 370, 'k^', label = 'Eyja Volcano')
     
     # plt.show()
-    # save image as .png file
+    # save image as .png file, with format 'TEMPCROSSYYYYMMDDHHHH.png'
     fig.savefig('TEMPcross' + df['name'][i] + '.png')
