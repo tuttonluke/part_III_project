@@ -1,3 +1,7 @@
+# convert .txt files to more efficient .nc files
+# calculate Ice Nucleating Particle (INP) concentrations from Volcanic Ash Concentrations
+# sum all particle size bins for total concentration
+
 import iris
 import math
 import numpy as np
@@ -28,13 +32,13 @@ for i in range(len(fields_with_dir)):
     cubeVA5 = cubes[5] * 0.05
     cubeVA6 = cubes[6] * 0.05
 
-    ashtotcube = (cubeVA0 + cubeVA1 + cubeVA2 + cubeVA3 + cubeVA4 + cubeVA5 + cubeVA6) * 1000000 # convert to ug / m^3
+    ashtotcube = (cubeVA0 + cubeVA1 + cubeVA2 + cubeVA3 + cubeVA4 + cubeVA5 + cubeVA6) * 1000000 # sum particle size bins and convert to ug / m^3
     ashtotcube.rename('ASH CONCENTRATION')
     ashtotcube.units = 'ug / m^3'
 
     iris.fileformats.netcdf.save(ashtotcube, 'ASH' + field_file[i][-16:-4] + '.nc', netcdf_format='NETCDF4')
 
-    cubeT = cubes[7] - 273.15 # convert to celcius
+    cubeT = cubes[7] - 273.15 # convert Kelvin to Celsius
     cubeT.rename('TEMPERTAURE')
     cubeT.units = 'Celsius'
 
@@ -42,7 +46,8 @@ for i in range(len(fields_with_dir)):
 
     VAdiams = ((6.34 * 10**-7), (2.85 * 10**-6), (5.63 * 10**-6), (1.13 * 10**-5), (2.25 * 10**-5), (4.51 * 10**-5), (9.02 * 10**-5))
     VAmasses = (cubeVA0.data, cubeVA1.data, cubeVA2.data, cubeVA3.data, cubeVA4.data, cubeVA5.data, cubeVA6.data)
-
+    
+    # calculate INP concentration
     def INP_calc(VAdiam, VAmass): 
         VApvol = (4/3) * math.pi * (VAdiam/2)**3 # ash particle volume assuming sphere
         VApsa = (4) * math.pi * (VAdiam/2)**2 * 2 # ash particle SA - multiplied by 2 assuming ash sphericity is actually 0.5
