@@ -49,8 +49,8 @@ for i in range(len(fields_with_dir)):
     
     # calculate INP concentration
     def INP_calc(VAdiam, VAmass): 
-        VApvol = (4/3) * math.pi * (VAdiam/2)**3 # ash particle volume assuming sphere
-        VApsa = (4) * math.pi * (VAdiam/2)**2 * 2 # ash particle SA - multiplied by 2 assuming ash sphericity is actually 0.5
+        VApvol = (4/3) * math.pi * (VAdiam / 2)**3 # ash particle volume assuming sphere
+        VApsa = (4) * math.pi * (VAdiam / 2)**2 * 2 # ash particle SA - multiplied by 2 assuming ash sphericity is actually 0.5
         VAvol = VAmass / 2300000 # ash volume (mass/density)
         VApnum = VAvol / VApvol # ash particle number
         T =  cubeT.data
