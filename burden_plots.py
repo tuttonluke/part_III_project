@@ -107,7 +107,7 @@ ax.set_xlabel('Time (MM-DD HH)', fontsize = 12) # add x-axis label
 ax.set_title('Total Ash Number Burden from NAME Simulation of Eyjafjallajokull Eruption', fontsize = 13) # add title
 plt.tight_layout()
 
-fig.savefig('ASHmassburden.png')
+fig.savefig('ASHnumberburden.png')
 plt.show()
 
 # INP number burden calculations
@@ -143,5 +143,5 @@ ax.set_xlabel('Time (YYYY-MM-DD)', fontsize = 12) # add x-axis label
 ax.set_title('Total INP Number Burden from NAME Simulation of Eyjafjallajokull Eruption', fontsize = 13) # add title
 plt.tight_layout()
 
-fig.savefig('ASHmassburden.png')
+fig.savefig('INPnumberburden.png')
 plt.show()
