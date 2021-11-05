@@ -14,6 +14,9 @@ met1_file = ['Met_Data1_C1_T1_201004141200.txt', 'Met_Data1_C1_T2_201004141800.t
 fields_with_dir = []
 met_with_dir = []
 
+# average mass of ash particles for each size bin
+VAmasses = (3.07 * 10**-13, 2.77 * 10**-11, 2.15 * 10**-10, 1.72 * 10**-9, 1.37 * 10**-8, 1.1 * 10**-7, 8.83 * 10**-7) # volcanic ash average masses for particle size bins
+
 # add the shared directory string to file names
 for i in range(len(field_file)):
     fields_with_dir.append(text_dir + field_file[i])
@@ -24,10 +27,9 @@ for i in range(len(fields_with_dir)):
     file_names = [fields_with_dir[i], met_with_dir[i]]
     cubes = iris.load(file_names) 
 
-    VAmasses = (3.07 * 10**-13, 2.77 * 10**-11, 2.15 * 10**-10, 1.72 * 10**-9, 1.37 * 10**-8, 1.1 * 10**-7, 8.83 * 10**-7) # volcanic ash average masses for particle size bins
+   
 
     # we assume only 5% of ash mass remains airborne distally
-    # (volume of box is 2.535*10*11 m^3)
     # convert to # / m^3 by dividing my average mass of particle
     # convert to # / L
     cubeVA0 = ((cubes[0] * 0.05) / VAmasses[0]) / 1000
