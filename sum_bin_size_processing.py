@@ -28,6 +28,8 @@ met_with_dir = []
 for i in range(len(field_file)):
     fields_with_dir.append(text_dir + field_file[i])
     met_with_dir.append(text_dir + met1_file[i])
+
+VAdiams = ((6.34 * 10**-7), (2.85 * 10**-6), (5.63 * 10**-6), (1.13 * 10**-5), (2.25 * 10**-5), (4.51 * 10**-5), (9.02 * 10**-5)) 
     
 for i in range(len(fields_with_dir)):
 
@@ -54,7 +56,6 @@ for i in range(len(fields_with_dir)):
 
     iris.fileformats.netcdf.save(cubeT,'TEMP' + met1_file[i][-16:-4] + '.nc', netcdf_format='NETCDF4')
 
-    VAdiams = ((6.34 * 10**-7), (2.85 * 10**-6), (5.63 * 10**-6), (1.13 * 10**-5), (2.25 * 10**-5), (4.51 * 10**-5), (9.02 * 10**-5))
     VAmasses = (cubeVA0.data, cubeVA1.data, cubeVA2.data, cubeVA3.data, cubeVA4.data, cubeVA5.data, cubeVA6.data)
     Temp =  cubeT.data
    
